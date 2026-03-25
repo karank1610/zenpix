@@ -5,10 +5,31 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Inter',sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
-img{
+img {
   display: block;
   max-width: 100%;
+}
+
+.loader {
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: l1 1s linear infinite alternate;
+}
+
+.loader:before {
+  content: "Loading..."
+}
+
+@keyframes l1 {
+  to {
+    opacity: 0
+  }
 }
