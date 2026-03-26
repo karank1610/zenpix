@@ -15,7 +15,7 @@ const Home = () => {
             const res = await axios.get(`https://api.unsplash.com/search/photos`, {
                 params: { query, per_page: 20 },
                 headers: {
-                    Authorization: `Client-ID tOmEFv8mnKw5OaC2kHuQ6CRtir3OvUG9WymlREopna0`,
+                    Authorization: `Client-ID ${import.meta.env.VITE_UNSPLASH_KEY}`,
                 },
             });
             setImages(res.data.results);
