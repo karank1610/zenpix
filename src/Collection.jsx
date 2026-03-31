@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import CreateCollectionModal from "./components/CreateCollectionModal";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Collection = () => {
     const [collections, setCollections] = useState([]);
     const [showModel, setShowModel] = useState(false);
     const [name, setName] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchcollections = async () => {
@@ -44,7 +46,8 @@ const Collection = () => {
                                     {
                                         collections.map((col) => (
                                             <div
-                                                key={col.id}
+                                                key={col._id}
+                                                onClick={()=> navigate(`/Collection/${col._id}`)}
                                                 className="rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
                                                 {/* cover image */}
                                                 <div className="h-70 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-200">

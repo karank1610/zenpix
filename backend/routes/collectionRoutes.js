@@ -56,4 +56,16 @@ router.patch("/:id/remove-image",async (req,res)=>{
     res.json(collection);
 })
 
+router.get("/:id",async (req,res)=>{
+    try {
+        const collection = await Collection.findById(req.params.id);
+        if(!collection){
+            return res.status(404).json({message:"Collection not found!"});
+        }
+        res.json(collection);
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+})
+
 module.exports = router;
