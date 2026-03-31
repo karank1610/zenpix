@@ -1,6 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
+
+    const navigate = useNavigate();
+
+    const handleHome = () =>{
+        sessionStorage.clear();
+        navigate('/');
+    }
     return (
         <>
             <div className="header-main border-b border-gray-300">
@@ -10,7 +17,7 @@ const Header = () => {
                         <div className="top-left-content mt-2">
 
                             <Link to={'/'} className="flex items-center">
-                                <img src="assets/img/logo.png" alt="logo" className="w-14 h-14 object-contain" />
+                                <img src="/assets/img/logo.png" alt="logo" className="w-14 h-14 object-contain" />
                                 <span className="text-xl font-bold tracking-tight mb-2">Zenpix</span>
                             </Link>
 
@@ -20,7 +27,8 @@ const Header = () => {
                                 <ul className="flex gap-4 text-[18px] items-center">
                                     <li>
                                         <Link to={'/'}
-                                            className="text-gray-600 font-semibold px-3 py-2 rounded hover:bg-gray-100 hover:text-black transition-all">
+                                            className="text-gray-600 font-semibold px-3 py-2 rounded hover:bg-gray-100 hover:text-black transition-all"
+                                            onClick={handleHome}>
                                             Home
                                         </Link>
                                     </li>

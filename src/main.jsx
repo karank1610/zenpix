@@ -1,11 +1,10 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
 import Home from './Home.jsx'
 import Header from './components/Header.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Collection from './Collection.jsx'
+import ImageInfo from './ImageInfo.jsx'
 
 createRoot(document.getElementById('root')).render(
   <>
@@ -14,6 +13,7 @@ createRoot(document.getElementById('root')).render(
   <Routes>
     <Route path='/' element={<Home/>}/>
     <Route path='/Collections' element={<Collection/>}/>
+    <Route path='/image/:id' element={<ImageInfo/>}/>
   </Routes>
   </BrowserRouter>
   </>

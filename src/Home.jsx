@@ -1,25 +1,31 @@
 import axios from "axios";
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-    const [query, setQuery] = useState("");
-    const [images, setImages] = useState([]);
-    const [searched, setSearched] = useState(false);
+    const navigate = useNavigate();
+    const [query, setQuery] = useState(sessionStorage.getItem("query") || "");
+    const [images, setImages] = useState(JSON.parse(sessionStorage.getItem("images")) || "[]");
+    const [searched, setSearched] = useState(sessionStorage.getItem("searched") === "true");
     const [loading, setLoading] = useState(false);
+
 
     const handleSearch = async () => {
         if (!query.trim()) return;
         try {
             setLoading(true);
             const res = await axios.get(`https://api.unsplash.com/search/photos`, {
-                params: { query, per_page: 20 },
+                params: { query, per_page: 50 },
                 headers: {
                     Authorization: `Client-ID ${import.meta.env.VITE_UNSPLASH_KEY}`,
                 },
             });
             setImages(res.data.results);
             setSearched(true);
+            sessionStorage.setItem("query",query);
+            sessionStorage.setItem("images",JSON.stringify(res.data.results));
+            sessionStorage.setItem("searched",true);
         } catch (error) {
             console.error(error);
         } finally {
@@ -107,11 +113,13 @@ const Home = () => {
                                     <div
                                         key={img.id}
                                         className="break-inside-avoid overflow-hidden rounded-lg group relative cursor-pointer"
+                                        onClick={() => navigate(`/image/${img.id}`)}
                                     >
                                         <img
                                             src={img.urls.small}
                                             alt={img.alt_description || "image"}
                                             className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
+
                                         />
                                         {/* Hover overlay with photographer name */}
                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
