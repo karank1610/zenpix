@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CollectionInfo = () => {
     const { id } = useParams();
     const [collection, setCollection] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCollection = async () => {
@@ -20,6 +21,21 @@ const CollectionInfo = () => {
 
         fetchCollection();
     }, [id]);
+
+    const handleRemoveImage = async (e, img) => {
+        e.stopPropagation(); // prevent navigating to image page
+        try {
+            await axios.patch(`http://localhost:5000/api/collections/${id}/remove-image`, {
+                imageUrl: img,
+            });
+            setCollection((prev) => ({
+                ...prev,
+                images: prev.images.filter((i) => i !== img),
+            }));
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     if (!collection) return <p className="p-10">Loading...</p>;
 
@@ -40,15 +56,25 @@ const CollectionInfo = () => {
                         {collection.images.map((img, index) => (
                             <div
                                 key={index}
+                                onClick={() => {
+                                    const unsplashId = img.split("#")[1]; // ← extract after #
+                                    navigate(`/image/${unsplashId}`);
+                                }}
                                 className="break-inside-avoid overflow-hidden rounded-lg group relative cursor-pointer"
                             >
                                 <img
-                                    src={img}
+                                    src={img.split("#")[0]}
                                     alt=""
                                     className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                                 />
                                 {/* Hover overlay */}
-                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:scale-105 transition-transform duration-300">
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-start justify-end p-2">
+                                    <button
+                                        onClick={(e) => handleRemoveImage(e, img)}
+                                        className="bg-white text-red-500 text-xs font-semibold px-2 py-1 rounded-md hover:bg-red-500 hover:text-white transition"
+                                    >
+                                        Remove
+                                    </button>
                                 </div>
                             </div>
                         ))}

@@ -31,6 +31,16 @@ const Collection = () => {
         }
     };
 
+    const handleDelete = async (id) => {
+        if (!window.confirm("Delete this collection?")) return;
+        try {
+            await axios.delete(`http://localhost:5000/api/collections/${id}`);
+            setCollections(collections.filter((c) => c._id !== id));
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <>
             <div className="collection-main my-10">
@@ -47,8 +57,17 @@ const Collection = () => {
                                         collections.map((col) => (
                                             <div
                                                 key={col._id}
-                                                onClick={()=> navigate(`/Collection/${col._id}`)}
-                                                className="rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition">
+                                                onClick={() => navigate(`/Collection/${col._id}`)}
+                                                className="rounded-lg overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition relative group">
+                                                <button
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        handleDelete(col._id);
+                                                    }}
+                                                    className="absolute top-2 right-2 z-10 bg-white text-red-500 text-xs font-semibold px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition hover:bg-red-500 hover:text-white"
+                                                >
+                                                    Delete
+                                                </button>
                                                 {/* cover image */}
                                                 <div className="h-70 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-200">
 

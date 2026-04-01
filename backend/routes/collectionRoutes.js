@@ -68,4 +68,13 @@ router.get("/:id",async (req,res)=>{
     }
 })
 
+router.delete("/:id", async (req, res) => {
+    try {
+        await Collection.findByIdAndDelete(req.params.id);
+        res.json({ message: "Collection deleted" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;

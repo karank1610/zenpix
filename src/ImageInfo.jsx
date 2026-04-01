@@ -50,12 +50,12 @@ const ImageInfo = () => {
             const result = await Promise.all(
                 selectedCollection.map(async (id) => {
                     const col = collections.find((c) => c._id === id);
-                    if (col.images.includes(image.urls.small)) {
+                    if (col.images.some((i) => i.includes(image.urls.small))) {
                         return { name: col.name, alreadyExists: true };
                     }
                     await axios.patch(`http://localhost:5000/api/collections/${id}/add-image`,
                         {
-                            imageUrl: image.urls.small,
+                            imageUrl: `${image.urls.small}#${image.id}`,
                         }
                     );
                     return { name: col.name, alreadyExists: false };
@@ -75,16 +75,20 @@ const ImageInfo = () => {
         }
     }
 
-    const handleRemoveFromCollection = async (e, id) => {
+    const handleRemoveFromCollection = async (e, colId) => {
         e.stopPropagation();
         try {
-            const col = collections.find((c) => c._id === id);
-            if (!col.images.includes(image.urls.small)) {
+            const col = collections.find((c) => c._id === colId);
+
+            const storedUrl = col.images.find((i) => i.includes(image.urls.small));
+
+            if (!storedUrl) {
                 alert("Image not in this collection");
                 return;
             }
-            await axios.patch(`http://localhost:5000/api/collections/${id}/remove-image`, {
-                imageUrl: image.urls.small,
+
+            await axios.patch(`http://localhost:5000/api/collections/${colId}/remove-image`, {
+                imageUrl: storedUrl,
             });
             fetchCollections();
             alert(`Image removed from: "${col.name}"`);
@@ -160,9 +164,9 @@ const ImageInfo = () => {
                                 className="px-6 bg-black text-white py-2 rounded-md hover:bg-gray-800 transition">
                                 Add to Collection
                             </button>
-                            <button 
-                            onClick={handleDownload}
-                            className="px-6 border py-2 rounded-md hover:bg-gray-100 transition">
+                            <button
+                                onClick={handleDownload}
+                                className="px-6 border py-2 rounded-md hover:bg-gray-100 transition">
                                 Download
                             </button>
                         </div>
