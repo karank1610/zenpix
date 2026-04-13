@@ -39,6 +39,12 @@ const Header = () => {
                                             Collection
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link to={'/ContactUs'}
+                                            className="text-gray-600 font-semibold px-3 py-2 rounded hover:bg-gray-100 hover:text-black transition-all">
+                                            Contact Us
+                                        </Link>
+                                    </li>
                                 </ul>
                             </nav>
                         </div>

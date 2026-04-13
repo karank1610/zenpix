@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Collection from './Collection.jsx'
 import ImageInfo from './ImageInfo.jsx'
 import CollectionInfo from './CollectionInfo.jsx'
+import ContactUs from './ContactUs.jsx'
 
 createRoot(document.getElementById('root')).render(
   <>
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
     <Route path='/Collections' element={<Collection/>}/>
     <Route path='/image/:id' element={<ImageInfo/>}/>
     <Route path='/Collection/:id' element={<CollectionInfo/>}/>
+    <Route path='/ContactUs' element={<ContactUs/>}/>
   </Routes>
   </BrowserRouter>
   </>
