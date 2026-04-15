@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const collectionRoutes = require("./routes/collectionRoutes");
+const userContactRoutes = require("./routes/userContactRoutes");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/collections",collectionRoutes);
+app.use("/api/contact",userContactRoutes);
 
 app.get("/", (req, res) => {
     res.send("hello");

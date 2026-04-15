@@ -1,6 +1,48 @@
+import axios from "axios";
+import { useRef } from "react";
+import toast, { Toaster } from "react-hot-toast";
+
 const ContactUs = () => {
+    const uname = useRef();
+    const email = useRef();
+    const companySize = useRef();
+    const subject = useRef();
+    const message = useRef();
+    async function sendContactData() {
+        const data = {
+            name: uname.current.value,
+            email: email.current.value,
+            companySize: companySize.current.value,
+            subject: subject.current.value,
+            message: message.current.value,
+        }
+        try {
+            const res = await axios.post("http://localhost:5000/api/contact", data);
+            toast.success("Message sent successfully!");
+            console.log(res.data);
+
+            uname.current.value = "";
+            email.current.value = "";
+            companySize.current.value = "";
+            subject.current.value = "";
+            message.current.value = "";
+
+        } catch (error) {
+            toast.error("Failed to send message.");
+            console.log(error);
+        }
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        try {
+            sendContactData();
+        } catch (error) {
+            console.log(error);
+        }
+    }
     return (
         <>
+            <Toaster position="top-center" />
             <div className="contactus-main py-15 bg-linear-120 from-right-to-left from-pink-700 to-purple-800">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="inner-content flex flex-col justify-center  gap-4">
@@ -8,25 +50,25 @@ const ContactUs = () => {
                         <span className="text-3xl text-center leading-10 text-white font-semibold max-w-150 self-center my-3">Fill out the form to view details and we'll contact you as soon as possible.</span>
                         <div className="contactus-form w-full " >
 
-                            <form action="" className="w-full max-w-4xl flex flex-col gap-4 mx-auto bg-white/20 p-10 rounded-2xl">
+                            <form onSubmit={handleSubmit} className="w-full max-w-4xl flex flex-col gap-4 mx-auto bg-white/20 p-10 rounded-2xl">
                                 <div className="flex gap-4">
                                     <div className="flex flex-col w-full">
                                         <span className="text-white py-1">Name</span>
-                                        <input type="text" id="name" placeholder="Ethan Johnson" className=" h-16 px-4  bg-white rounded-xl text-left focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" required autoComplete="additional-name" />
+                                        <input type="text" id="name" placeholder="Ethan Johnson" className=" h-16 px-4 bg-white rounded-xl text-left focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" ref={uname} required autoComplete="additional-name" />
                                     </div>
                                     <div className="flex flex-col w-full">
                                         <span className="text-white py-1">Company Email</span>
-                                        <input type="email" id="company-email" placeholder="ethan@johnson.com" className="h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" required />
+                                        <input type="email" id="company-email" placeholder="ethan@johnson.com" className="h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" ref={email} required />
                                     </div>
                                 </div>
                                 <div className="flex gap-4">
                                     <div className="flex flex-col w-full relative">
                                         <span className="text-white">Company Size</span>
-                                        <select name="company-size" id="" className="appearance-none h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" required defaultValue="def">
-                                            <option value="def" disabled> -- Select Company Size -- </option>
-                                            <option value="1-10">1-10 Employees</option>
-                                            <option value="11-50">11-50 Employees</option>
-                                            <option value="51-100">51-100 Employees</option>
+                                        <select name="company-size" id="" className="appearance-none h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" defaultValue="" ref={companySize} required>
+                                            <option value="" disabled> -- Select Company Size -- </option>
+                                            <option value="1-10 Employees">1-10 Employees</option>
+                                            <option value="11-50 Employees">11-50 Employees</option>
+                                            <option value="51-100 Employees">51-100 Employees</option>
                                         </select>
 
                                         <span className="absolute right-3 top-[60%] -translate-y-1/2 pointer-events-none text-black ">
@@ -35,11 +77,11 @@ const ContactUs = () => {
                                     </div>
                                     <div className="flex flex-col w-full relative">
                                         <span className="text-white">Subject</span>
-                                        <select name="subject" id="" className="appearance-none h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" required defaultValue="def">
-                                            <option value="def" className="font-bold" disabled> -- Select Subject -- </option>
-                                            <option value="1-10">Contact Page</option>
-                                            <option value="11-50">Product Page</option>
-                                            <option value="51-100">Dashboard</option>
+                                        <select name="subject" id="" className="appearance-none h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" ref={subject} defaultValue="" required>
+                                            <option value="" disabled> -- Select Subject -- </option>
+                                            <option value="Contact Page">Contact Page</option>
+                                            <option value="Product Page">Product Page</option>
+                                            <option value="Dashboard">Dashboard</option>
 
                                         </select>
                                         <span className="absolute right-3 top-[60%] -translate-y-1/2 pointer-events-none text-black ">
@@ -50,7 +92,7 @@ const ContactUs = () => {
 
                                 <div className="flex flex-col">
                                     <span className="text-white block py-1">Message</span>
-                                    <textarea name="message" id="" placeholder="Enter your message here..." className="w-full h-60 px-5 py-3 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" required></textarea>
+                                    <textarea name="message" id="" placeholder="Enter your message here..." className="w-full h-60 px-5 py-3 bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" ref={message} required></textarea>
                                 </div>
 
                                 <button type="submit" className="w-full px-5 py-5 bg-white rounded-xl font-bold text-2xl text-purple-800 hover:bg-purple-200 transition">Contact Sales</button>
