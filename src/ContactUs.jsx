@@ -46,12 +46,12 @@ const ContactUs = () => {
             <div className="contactus-main py-15 bg-linear-120 from-right-to-left from-pink-700 to-purple-800">
                 <div className="max-w-7xl mx-auto px-4">
                     <div className="inner-content flex flex-col justify-center  gap-4">
-                        <span className="text-7xl text-center leading-20 tracking-tight text-white font-bold max-w-160 self-center">Intereseted in our business pricing?</span>
-                        <span className="text-3xl text-center leading-10 text-white font-semibold max-w-150 self-center my-3">Fill out the form to view details and we'll contact you as soon as possible.</span>
+                        <span className="text-7xl text-center leading-20 tracking-tight text-white font-bold max-w-160 self-center max-sm:text-4xl max-sm:max-w-140 max-sm:leading-10">Intereseted in our business pricing?</span>
+                        <span className="text-3xl text-center leading-10 text-white font-semibold max-w-150 self-center my-3 max-sm:text-sm max-sm:leading-1 max-sm:mb-10 max-sm:font-normal">Fill out the form to view details and we'll contact you as soon as possible.</span>
                         <div className="contactus-form w-full " >
 
-                            <form onSubmit={handleSubmit} className="w-full max-w-4xl flex flex-col gap-4 mx-auto bg-white/20 p-10 rounded-2xl">
-                                <div className="flex gap-4">
+                            <form onSubmit={handleSubmit} className="w-full max-w-4xl flex flex-col gap-4 mx-auto bg-white/20 p-10 rounded-2xl max-sm:max-w-full max-sm:p-4">
+                                <div className="flex gap-4 max-sm:flex-col">
                                     <div className="flex flex-col w-full">
                                         <span className="text-white py-1">Name</span>
                                         <input type="text" id="name" placeholder="Ethan Johnson" className=" h-16 px-4 bg-white rounded-xl text-left focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" ref={uname} required autoComplete="additional-name" />
@@ -61,7 +61,7 @@ const ContactUs = () => {
                                         <input type="email" id="company-email" placeholder="ethan@johnson.com" className="h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 placeholder:font-bold placeholder-black" ref={email} required />
                                     </div>
                                 </div>
-                                <div className="flex gap-4">
+                                <div className="flex gap-4 max-sm:flex-col">
                                     <div className="flex flex-col w-full relative">
                                         <span className="text-white">Company Size</span>
                                         <select name="company-size" id="" className="appearance-none h-16 px-5  bg-white rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500" defaultValue="" ref={companySize} required>
