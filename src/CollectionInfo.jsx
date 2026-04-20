@@ -41,8 +41,8 @@ const CollectionInfo = () => {
 
     return (
         <div className="p-10 text-center">
-            <span className="text-[50px] block mb-4 font-semibold capitalize tracking-tight bg-linear-to-r from-yellow-500 to-purple-600 bg-clip-text text-transparent leading-none">{collection.name}</span>
-            <span className="text-[16px] block mb-10 font-normal tracking-tight  leading-none">{collection.images.length} Photos</span>
+            <span className="text-[50px] max-sm:text-[30px] block mb-3 font-semibold capitalize tracking-tight bg-linear-to-r from-yellow-500 to-purple-600 bg-clip-text text-transparent leading-none">{collection.name}</span>
+            <span className="text-[16px] max-sm:text-[14px] block mb-10 font-normal tracking-tight  leading-none">{collection.images.length} Photos</span>
 
             {collection.images.length === 0 ? (
                 <div className="h-[60vh] flex items-center justify-center">

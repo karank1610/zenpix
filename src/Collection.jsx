@@ -46,13 +46,13 @@ const Collection = () => {
             <div className="collection-main my-10">
                 <div className="max-w-400 mx-auto px-4">
                     <div className="top-content flex flex-col text-center items-center justify-center gap-4 py-4">
-                        <span className="text-[40px] font-semibold tracking-tight bg-linear-to-r from-yellow-500 to-purple-600 bg-clip-text text-transparent leading-none">Collections</span>
-                        <span className="font-normal max-w-sm">Explore the world through collections of beautiful photos free to use under the <a href="/" className="font-semibold underline">Unsplash License</a>.</span>
+                        <span className="text-[40px] max-sm:text-[32px] font-semibold tracking-tight bg-linear-to-r from-yellow-500 to-purple-600 bg-clip-text text-transparent leading-none">Collections</span>
+                        <span className="font-normal max-w-sm max-sm:text-sm">Explore the world through collections of beautiful photos free to use under the <a href="/" className="font-semibold underline">Unsplash License</a>.</span>
                     </div>
                     <div className="collection-cards-main">
                         <div className="collection-cards-child-main">
-                            <div className="collection-cards-child">
-                                <div className="grid grid-cols-3 gap-6 mt-6">
+                            <div className="collection-cards-child max-sm:px-10">
+                                <div className="grid grid-cols-3 max-sm:grid-cols-2 gap-6 mt-6">
                                     {
                                         collections.map((col) => (
                                             <div
@@ -69,7 +69,7 @@ const Collection = () => {
                                                     Delete
                                                 </button>
                                                 {/* cover image */}
-                                                <div className="h-70 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-200">
+                                                <div className="h-70 max-sm:h-40 grid grid-cols-2 grid-rows-2 gap-1 bg-gray-200">
 
                                                     {col.images.length > 0 ? (
                                                         col.images.slice(0, 4).map((img, i) => (
@@ -88,9 +88,9 @@ const Collection = () => {
 
                                                 </div>
                                                 {/* info */}
-                                                <div className="flex flex-col justify-center-center p-3 px-6">
-                                                    <span className="font-semibold text-lg">{col.name}</span>
-                                                    <span className="text-sm text-gray-500">
+                                                <div className="flex flex-col justify-center-center p-3 px-6 max-sm:px-3">
+                                                    <span className="font-semibold text-lg max-sm:text-sm">{col.name}</span>
+                                                    <span className="text-sm max-sm:text-xs text-gray-500">
                                                         {col.images.length} images
                                                     </span>
                                                 </div>
@@ -101,10 +101,10 @@ const Collection = () => {
 
                                     <div
                                         onClick={() => setShowModel(true)}
-                                        className="h-90 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition"
+                                        className="h-90 max-sm:h-55 rounded-lg border-2 border-dashed border-gray-300 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition"
                                     >
-                                        <span className="text-5xl text-gray-500">+</span>
-                                        <span className="text-gray-500 text-3xl font-bold mt-1">New Collection</span>
+                                        <span className="text-5xl max-sm:text-4xl text-gray-500">+</span>
+                                        <span className="text-gray-500 text-3xl max-sm:text-2xl font-bold mt-1">New Collection</span>
                                     </div>
 
                                 </div>
