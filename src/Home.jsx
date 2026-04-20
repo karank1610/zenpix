@@ -42,7 +42,7 @@ const Home = () => {
                     <img
                         src="assets/img/hero-image.png"
                         alt=""
-                        className="w-full mt-10 object-cover"
+                        className="w-full mt-10 object-cover max-sm:h-110"
                     />
                     {/* Overlay */}
                     <div className="absolute inset-0" />
@@ -51,11 +51,11 @@ const Home = () => {
                     <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full px-4">
                         <div className="flex flex-col items-center text-center gap-3">
 
-                            <span className="text-5xl font-bold tracking-tight text-black">
+                            <span className="text-5xl font-bold tracking-tight text-black max-sm:text-3xl">
                                 Search
                             </span>
 
-                            <span className="text-gray-400 tracking-tight">
+                            <span className="text-gray-400 tracking-tight max-sm:text-sm">
                                 Search high-resolution images from Unsplash
                             </span>
 
@@ -66,7 +66,7 @@ const Home = () => {
                                     value={query}
                                     onChange={(e) => setQuery(e.target.value)}
                                     onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                                    className="mt-3 px-4 py-5 w-160 tracking-tight rounded-lg outline-none ring-1 ring-gray-300 inset-shadow-sm focus:shadow-xl focus:ring-2 focus:ring-gray-300 transition"
+                                    className="mt-3 max-sm:mt-0 px-4 py-5 w-160 tracking-tight rounded-lg outline-none ring-1 ring-gray-300 inset-shadow-sm focus:shadow-xl focus:ring-2 focus:ring-gray-300 transition max-sm:w-120 max-sm:py-3 max-sm:text-sm"
                                 />
                                 <FiSearch
                                     onClick={handleSearch}
