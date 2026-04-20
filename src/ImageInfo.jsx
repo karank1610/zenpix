@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 
 
@@ -68,8 +69,8 @@ const ImageInfo = () => {
             const added = result.filter((r) => !r.alreadyExists).map((r) => r.name);
             const existing = result.filter((r) => r.alreadyExists).map((r) => r.name);
 
-            if (existing.length > 0) alert(`Image already exists in: ${existing.join(",")}`);
-            if (added.length > 0) alert(`Image added to: ${added.join(",")}`);
+            if (existing.length > 0) toast.error(`Image already exists in: ${existing.join(",")}`);
+            if (added.length > 0) toast.success(`Image added to: ${added.join(",")}`);
         } catch (error) {
             console.error(error);
         }
@@ -83,7 +84,7 @@ const ImageInfo = () => {
             const storedUrl = col.images.find((i) => i.includes(image.urls.small));
 
             if (!storedUrl) {
-                alert("Image not in this collection");
+                toast.error("Image not in this collection");
                 return;
             }
 
@@ -91,7 +92,7 @@ const ImageInfo = () => {
                 imageUrl: storedUrl,
             });
             fetchCollections();
-            alert(`Image removed from: "${col.name}"`);
+            toast.success(`Image removed from: "${col.name}"`);
         } catch (error) {
             console.error(error);
         }
@@ -120,9 +121,10 @@ const ImageInfo = () => {
     return (
 
         <>
+            <Toaster position="top-center" />
             {(!image) && <div className="loader opacity-50"></div>}
 
-            <div className="info-main my-10 mx-80">
+            <div className="info-main my-10 mx-80 max-sm:mx-6">
 
 
                 {/* TRUE 50-50 GRID */}
@@ -147,18 +149,18 @@ const ImageInfo = () => {
                             <img
                                 src={image?.user?.profile_image?.medium}
                                 alt="profile"
-                                className="w-10 h-10 rounded-full"
+                                className="w-12 h-12 rounded-full max-sm:w-8 max-sm:h-8"
                             />
                             <div>
-                                <p className="font-semibold">{image?.user?.name}</p>
-                                <p className="text-sm text-gray-500">
+                                <p className="font-semibold text-xl max-sm:text-sm">{image?.user?.name}</p>
+                                <p className="text-sm text-gray-500 max-sm:text-xs">
                                     {new Date(image?.created_at).toDateString()}
                                 </p>
                             </div>
                         </div>
 
                         {/* ACTIONS */}
-                        <div className="flex gap-3">
+                        <div className="flex gap-3 max-sm:flex-col max-sm:text-sm">
                             <button
                                 onClick={() => { setShowModal(true) }}
                                 className="px-6 bg-black text-white py-2 rounded-md hover:bg-gray-800 transition">
@@ -173,7 +175,7 @@ const ImageInfo = () => {
 
                         {/* COLLECTIONS */}
                         <div>
-                            <div className="font-semibold text-2xl mb-3">Collections</div>
+                            <div className="font-semibold text-2xl mb-3 max-sm:text-xl">Collections</div>
 
                             <div className="flex flex-col gap-3">
                                 {collections.map((col) => {
@@ -192,17 +194,17 @@ const ImageInfo = () => {
                                                 <img
                                                     src={col.images[0]}
                                                     alt="img"
-                                                    className="w-12 h-12 rounded-md object-cover"
+                                                    className="w-12 h-12 rounded-md object-cover max-sm:w-10 max-sm:h-10"
                                                 />
                                             ) : (
-                                                <div className="w-12 h-12 rounded-md bg-gray-100 flex items-center justify-center">
-                                                    <span className="text-[9px] text-gray-400 text-center">No Image</span>
+                                                <div className="w-12 h-12 rounded-md bg-gray-100 flex items-center justify-center max-sm:w-10 max-sm:h-10">
+                                                    <span className="text-[9px] text-gray-400 text-center max-sm:text-[7px]">No Image</span>
                                                 </div>
                                             )}
 
                                             <div className="flex-1">
-                                                <p className="text-sm font-medium">{col.name}</p>
-                                                <p className={`text-xs ${isSelected ? "text-gray-300" : "text-gray-500"}`}>
+                                                <p className="text-[17px] font-medium max-sm:text-xs">{col.name}</p>
+                                                <p className={`text-[13px] ${isSelected ? "text-gray-300" : "text-gray-500"} max-sm:text-[10px]`}>
                                                     {col.images.length} images
                                                 </p>
                                             </div>
@@ -211,7 +213,7 @@ const ImageInfo = () => {
                                             {!isSelected && (
                                                 <button
                                                     onClick={(e) => handleRemoveFromCollection(e, col._id)}
-                                                    className="hidden group-hover:block text-xs text-red-500 mr-5">
+                                                    className="hidden group-hover:block text-xs text-red-500 mr-5 max-sm:text-[9px]">
                                                     Remove
                                                 </button>
                                             )}
@@ -224,7 +226,7 @@ const ImageInfo = () => {
                         {selectedCollection.length > 0 && (
                             <button
                                 onClick={handleSaveToCollection}
-                                className="px-6 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">
+                                className="px-6 bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition max-sm:text-sm">
                                 Save to {selectedCollection.length} Collection{selectedCollection.length > 1 ? "s" : ""}
                             </button>
                         )}
